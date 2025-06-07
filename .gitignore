@@ -1,5 +1,6 @@
 __pycache__
 
 uploaded_files/*
+/.tox
 
 /venv

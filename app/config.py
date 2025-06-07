@@ -1,5 +1,4 @@
 import logging
-import sys
 from types import FrameType
 from typing import List, cast
 
@@ -20,10 +19,10 @@ class Settings(BaseSettings):
     # BACKEND_CORS_ORIGINS is a comma-separated list of origins
     # e.g: http://localhost,http://localhost:4200,http://localhost:3000
     BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = [
-        "http://localhost:3000",  # type: ignore
-        "http://localhost:8000",  # type: ignore
-        "https://localhost:3000",  # type: ignore
-        "https://localhost:8000",  # type: ignore
+        AnyHttpUrl("http://localhost:3000"),
+        AnyHttpUrl("http://localhost:8000"),
+        AnyHttpUrl("https://localhost:3000"),
+        AnyHttpUrl("https://localhost:8000"),
     ]
 
     PROJECT_NAME: str = "Titanic model API"
