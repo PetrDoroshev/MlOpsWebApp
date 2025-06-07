@@ -16,9 +16,11 @@ app.state.lock = Lock()
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="app/templates")
 
+
 @app.get("/", response_class=HTMLResponse)
 async def main_page(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
+
 
 @app.post("/upload/", response_class=HTMLResponse)
 async def upload_audio(request: Request, file: UploadFile = File(...)):
@@ -30,7 +32,7 @@ async def upload_audio(request: Request, file: UploadFile = File(...)):
     assert counter_value is not None
 
     file_location = f"uploaded_files/uploaded_{counter_value}.mp3"
-    
+
     with open(file_location, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
@@ -42,4 +44,3 @@ async def upload_audio(request: Request, file: UploadFile = File(...)):
     str_result = resolve_prediction(input_data=result[0]["preds"][0])
 
     return templates.TemplateResponse("result.html", {"request": request, "result": str_result})
-
