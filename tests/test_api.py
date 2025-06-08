@@ -1,18 +1,20 @@
 from fastapi.testclient import TestClient
 
+
 def test_upload_youtube_url(test_client: TestClient):
     response = test_client.post(
-        "/upload_yt_url/",
-        data={"youtube_url": "https://rutube.ru/video/f8581fd9e0197d7d4ba9432bb35d75b2"}
+        "/upload_yt_url/", data={"youtube_url": "https://rutube.ru/video/f8581fd9e0197d7d4ba9432bb35d75b2"}
     )
 
     assert response.status_code == 200
     assert "metal" in response.text.lower()
 
+
 def test_main_page(test_client: TestClient):
     response = test_client.get("/")
     assert response.status_code == 200
     assert "<html" in response.text.lower()
+
 
 def test_invalid_pages(test_client: TestClient):
     response = test_client.get("/nonexistent")
