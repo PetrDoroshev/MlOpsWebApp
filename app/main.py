@@ -6,6 +6,7 @@ from fastapi import FastAPI, UploadFile, File, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi.responses import JSONResponse
 import shutil
 import librosa
 from threading import Lock
@@ -41,7 +42,12 @@ async def upload_audio(request: Request, file: UploadFile = File(...)):
     with open(file_location, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
-    audio, sr = librosa.load(file_location)
+    try:
+        audio, sr = librosa.load(file_location)
+    except Exception as e:
+        print(f"Error happened {e}")
+        return JSONResponse(status_code=400, content="")
+
 
     features_data = extract_features(audio, sr)
     result = make_prediction(input_data=features_data)
