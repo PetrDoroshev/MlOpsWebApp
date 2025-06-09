@@ -17,6 +17,7 @@ RUN pip install -r requirements/requirements.txt
 
 ENV PYTHONPATH="/opt/MlOpsProject:"
 
+RUN mkdir /opt/mlops_webapp/uploaded_files
 RUN chown -R ml-api-user /opt/mlops_webapp/uploaded_files
 
 USER ml-api-user
